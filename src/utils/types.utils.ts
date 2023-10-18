@@ -22,16 +22,25 @@ export interface StatusCodeType {
   SERVERERROR: number;
 }
 
+/** Pagination types interface */
+export interface PaginationType {
+  totalItem: number;
+  totalPages: number;
+  currentPage: number;
+  previousPage: number;
+  nextPage: number;
+  data: Array<unknown>;
+}
+
 /** Status code types interface */
 export interface CustomerDataType {
   customer_id: number;
-  store_id: number;
-  first_name: string;
-  last_name: string;
+  name: string;
   email: string;
-  address_id: number;
-  activebool: boolean;
-  create_date: string;
-  last_update: string;
-  active: number;
+  phone: string;
+  address: string;
+  city: string;
+  district: string;
+  postal_code: string;
+  country: string;
 }

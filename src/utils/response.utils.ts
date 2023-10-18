@@ -2,7 +2,7 @@
 import { Response } from 'express';
 
 /** Local imports */
-import { StatusCodeType } from './types.utils';
+import { StatusCodeType, PaginationType } from './types.utils';
 
 export const STATUSCODE: StatusCodeType = {
   OK: 200,
@@ -20,7 +20,7 @@ export const successResponse = (
   res: Response,
   message: string,
   cached: boolean = false,
-  result: Array<unknown> = []
+  result: Array<unknown> | NonNullable<PaginationType> = []
 ): object => {
   return res
     .status(STATUSCODE.OK)
