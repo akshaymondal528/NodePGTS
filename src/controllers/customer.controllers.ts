@@ -53,8 +53,8 @@ export const getAllCustomers = async (
 
     paginate.totalItem = rowCount;
     paginate.totalPages = totalPages;
-    (paginate.currentPage = page),
-      (paginate.previousPage = page - 1 === 0 ? page : page - 1);
+    paginate.currentPage = page;
+    paginate.previousPage = page - 1 === 0 ? page : page - 1;
     paginate.nextPage = page + 1 > totalPages ? page : page + 1;
     paginate.data = rows;
 
