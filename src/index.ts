@@ -21,24 +21,27 @@ app.use(express.urlencoded({ extended: true }));
 /** API routes */
 app.use('/api/v1', customerRoutes);
 
-if (cluster.isPrimary) {
-  for (let i: number = 0; i < totalCPU; i++) {
-    cluster.fork();
-  }
-  cluster.on('exit', () => {
-    cluster.fork();
-  });
-} else {
-  (async () => {
-    try {
-      await pool.query('SELECT 1');
+(async () => {
+  try {
+    await pool.query('SELECT 1');
+    if (cluster.isPrimary) {
+      console.log(
+        `Master server running | port(${port}) | Database connected | pid(${process.pid})`
+      );
+      for (let i: number = 0; i < totalCPU; i++) {
+        cluster.fork();
+      }
+      cluster.on('exit', () => {
+        cluster.fork();
+      });
+    } else {
       server.listen(port, () =>
         console.log(
-          `Server running | port(${port}) | Database connected | pid(${process.pid})`
+          `Worker server running | port(${port}) | Database connected | pid(${process.pid})`
         )
       );
-    } catch (error) {
-      console.log(`Database not connect`);
     }
-  })();
-}
+  } catch (error) {
+    console.log(`Database not connect`);
+  }
+})();
