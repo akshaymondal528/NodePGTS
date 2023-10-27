@@ -26,7 +26,7 @@ app.use('/api/v1', customerRoutes);
     await pool.query('SELECT 1');
     if (cluster.isPrimary) {
       console.log(
-        `Master server running | port(${port}) | Database connected | pid(${process.pid})`
+        `[ Master ] - Server running | port(${port}) | Database connected | pid(${process.pid})`
       );
       for (let i: number = 0; i < totalCPU; i++) {
         cluster.fork();
@@ -37,7 +37,7 @@ app.use('/api/v1', customerRoutes);
     } else {
       server.listen(port, () =>
         console.log(
-          `Worker server running | port(${port}) | Database connected | pid(${process.pid})`
+          `[ Worker ] - Server running | port(${port}) | Database connected | pid(${process.pid})`
         )
       );
     }
